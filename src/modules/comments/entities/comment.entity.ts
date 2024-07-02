@@ -9,11 +9,11 @@ export class Comment extends BaseEntity {
     })
     content: string;
 
-    @ManyToOne(() => Post, { nullable: false })
+    @ManyToOne(() => Post, { nullable: false, onDelete: 'CASCADE'})
     @JoinColumn({ name: "post_id" })
     post: Post;
 
-    @ManyToOne(() => Comment, { nullable: true })
+    @ManyToOne(() => Comment, { nullable: true, onDelete: 'CASCADE'})
     @JoinColumn({ name: "parent_id" })
     parent: Comment;
 

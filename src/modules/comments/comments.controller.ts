@@ -1,9 +1,31 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { CommentsService } from './comments.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { CommentRequestDto } from './dto/comment.request.dto.ts';
+import { CommentResponseDto } from './dto/comment.response.dto';
+import { ReplyRequestDto } from './dto/reply.request.dto';
 
-@Controller('comments')
+@Controller()
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
+
+  @Post('comment')
+  async create(@Body() body : CommentRequestDto) : Promise<CommentResponseDto> {
+    return await this.commentsService.create(body);
+  }
+
+  @Post('reply')
+  async reply(@Body() body: ReplyRequestDto) : Promise<CommentResponseDto> {
+    return await this.commentsService.reply(body);
+  }
+
+  @Get('comment/:id')
+  async getCommentById(@Param('id') id: number) : Promise<CommentResponseDto> {
+    return await this.commentsService.getCommentById(id);
+  }
+
+  @Get('comments')
+  async getAllComments() : Promise<CommentResponseDto[]> {
+    return await this.commentsService.getAllComments();
+  }
 
 }
