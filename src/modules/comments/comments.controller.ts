@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CommentRequestDto } from './dto/comment.request.dto.ts';
 import { CommentResponseDto } from './dto/comment.response.dto';

@@ -124,17 +124,4 @@ export class CommentsService {
         return rootComments.map(root => mapComments(comments, root.id));
     }
 
-
-
-
-    // async getCommentWithRepliesById(id: number) : Promise<CommentDTO> {
-    //     const comment = await this.commentsRepository.findCommentWithReplies(id);
-    //     return comment;
-    // }
-
-    // async getCommentWithRepliesByPostId(postId: number) : Promise<CommentDTO[]> {
-    //     const comments = await this.commentsRepository.findCommentWithRepliesByPostId(postId);
-    //     return comments;
-    // }
-
 }

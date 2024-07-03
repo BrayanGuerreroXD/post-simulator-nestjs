@@ -1,5 +1,4 @@
 import { Post } from "./entities/post.entity";
-import { Comment } from "../comments/entities/comment.entity";
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 

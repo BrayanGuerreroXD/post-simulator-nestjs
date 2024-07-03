@@ -1,7 +1,6 @@
 import { DataSource, Repository } from "typeorm";
 import { Comment } from "./entities/comment.entity";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CommentDTO } from "./interfaces/comment.dto";
 
 export class CommentsRepository extends Repository<Comment> {
     constructor(
