@@ -5,14 +5,12 @@ import { Post } from './entities/post.entity';
 import { plainToInstance } from 'class-transformer';
 import { PostNotFoundException } from 'src/exception-handler/exceptions.classes';
 import { PostRequestDto } from './dto/post.request.dto';
-import { MediatorCommentsService } from '../mediators/mediator-comments/mediator-comments.service';
 
 @Injectable()
 export class PostsService {
 
     constructor(
         private readonly postsRepository: PostsRepository,
-        private readonly mediatorCommentsService: MediatorCommentsService
     ) {}
     
     async create(body: PostRequestDto) : Promise<PostResponseDto> {
@@ -50,21 +48,12 @@ export class PostsService {
         }));
     }
 
-    async getPostById(id: number): Promise<PostResponseDto> {
+    async getPostById(id: number): Promise<Post> {
         const post = await this.postsRepository.getPostById(id);
 
         if (!post)
             throw new PostNotFoundException();
 
-        return plainToInstance(PostResponseDto, post, {
-            excludeExtraneousValues: true,
-        });
-    }
-
-    async getPostEntityById(id: number): Promise<Post> {
-        const post = await this.postsRepository.getPostById(id);
-        if (!post)
-            throw new PostNotFoundException();
         return post;
     }
 

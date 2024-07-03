@@ -6,18 +6,19 @@ import { Comment } from './entities/comment.entity';
 import { plainToInstance } from 'class-transformer';
 import { CommentNotFoundException } from 'src/exception-handler/exceptions.classes';
 import { ReplyRequestDto } from './dto/reply.request.dto';
-import { MediatorPostsService } from '../mediators/mediator-posts/mediator-posts.service';
+import { PostsService } from '../posts/posts.service';
+import { CommentDTO } from './interfaces/comment.dto';
 
 @Injectable()
 export class CommentsService {
 
     constructor(
         private readonly commentsRepository: CommentsRepository,
-        private readonly mediatorPostsService : MediatorPostsService
+        private readonly postsService : PostsService
     ) {}
 
     async create(body : CommentRequestDto) : Promise<CommentResponseDto> {
-        const post = await this.mediatorPostsService.getPostEntityById(body.postId);
+        const post = await this.postsService.getPostById(body.postId);
         const comment : Comment = new Comment();
         comment.content = body.content;
         comment.post = post;
@@ -70,6 +71,16 @@ export class CommentsService {
         });
 
         return commentsResponseDto
+    }
+
+    async getCommentWithRepliesById(id: number) : Promise<CommentDTO> {
+        const comment = await this.commentsRepository.findCommentWithReplies(id);
+        return comment;
+    }
+
+    async getCommentWithRepliesByPostId(postId: number) : Promise<CommentDTO[]> {
+        const comments = await this.commentsRepository.findCommentWithRepliesByPostId(postId);
+        return comments;
     }
 
 }

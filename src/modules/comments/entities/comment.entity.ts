@@ -2,7 +2,7 @@ import { Post } from "../../../modules/posts/entities/post.entity";
 import { BaseEntity } from "../../../config/base.entity";
 import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 
-@Entity()
+@Entity('comment')
 export class Comment extends BaseEntity {
     @Column({
         nullable: false,

@@ -40,29 +40,9 @@ export class PostsRepository extends Repository<Post> {
     
     async getPostById(id: number): Promise<Post> {
         const post = await this.repository.createQueryBuilder('post')
-            .leftJoinAndSelect('post.comments', 'comments', 'comments.parent IS NULL')
             .where('post.id = :id', { id })
             .getOne();
-
-        if (post) {
-            post.comments = await this.loadNestedComments(post.comments);
-        }
-
         return post;
-    }
-
-    private async loadNestedComments(comments: Comment[]): Promise<Comment[]> {
-        for (const comment of comments) {
-            // Carga los comentarios hijos de cada comentario
-            comment.replies = await this.dataSource.getRepository(Comment).createQueryBuilder('comment')
-                .leftJoinAndSelect('comment.replies', 'replies')
-                .where('comment.parent = :id', { id: comment.id })
-                .getMany();
-            // Llama recursivamente para cargar los hijos de los hijos
-            comment.replies = await this.loadNestedComments(comment.replies);
-        }
-
-        return comments;
     }
 
     async postExists(id: number): Promise<boolean> {
