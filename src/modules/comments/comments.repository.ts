@@ -1,6 +1,7 @@
 import { DataSource, Repository } from "typeorm";
 import { Comment } from "./entities/comment.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { CommentDTO } from "./interfaces/comment.dto";
 
 export class CommentsRepository extends Repository<Comment> {
     constructor(
@@ -74,6 +75,21 @@ export class CommentsRepository extends Repository<Comment> {
         `;
     
         return await this.query(query, [id]);
+    }
+
+    async findAllReplyByCommentId(commentId: number): Promise<CommentDTO> {
+        const results = await this.repository.query(
+            `SELECT build_comment_tree(
+                (WITH descendants AS (SELECT * FROM get_comment_descendants($1))
+                SELECT jsonb_agg(row_to_json(descendants)) FROM descendants), $1
+            ) AS comment_tree`, [commentId],
+        );
+        return results[0]?.comment_tree || null;
+    }
+
+    async findAllCommentsByPostId(postId: number): Promise<CommentDTO[]> {
+        const results = await this.repository.query('SELECT * FROM get_comment_trees_by_post_id($1) AS comment_trees', [postId]);
+        return results[0]?.comment_trees || [];
     }
 
 }

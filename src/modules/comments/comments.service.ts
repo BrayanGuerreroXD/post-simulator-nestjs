@@ -74,54 +74,16 @@ export class CommentsService {
     }
 
     // Get all responses to a comment and their count by implementing recursion
-    async getCommentWithRepliesById(id: number) : Promise<CommentDTO> {
-        const results = await this.commentsRepository.findCommentWithReplies(id);
-    
-        if (!results || results.length === 0)
-            return null;
-    
-        const mapComments = (comments: any[], parentId = null): CommentDTO => {
-            const comment = comments.find(c => c.id === parentId);
-            if (!comment) return null;
-    
-            const children = comments.filter(c => c.parent_id === comment.id);
-            const firstReply = children.length > 0 ? mapComments(comments, children[0].id) : null;
-    
-            return {
-                id: comment.id,
-                content: comment.content,
-                count: children.length + children.reduce((acc, child) => acc + mapComments(comments, child.id).count, 0),
-                firstReply: firstReply
-            };
-        };
-    
-        return mapComments(results, id);
-    }
+    async getCommentWithRepliesById(id: number): Promise<CommentDTO> {
+        const comment = await this.commentsRepository.getCommentById(id);
+        if (!comment)
+            throw new CommentNotFoundException();
+       return await this.commentsRepository.findAllReplyByCommentId(comment.id);
+    }    
 
     // Get all responses to all comments by post_id and their count by implementing recursion
-    async getCommentWithRepliesByPostId(postId: number) : Promise<CommentDTO[]> {
-        const comments = await this.commentsRepository.getAllCommentsWithParentByPostId(postId);
-        
-        if (!comments || comments.length === 0)
-            return [];
-
-        const mapComments = (comments: any[], parentId = null): CommentDTO => {
-            const comment = comments.find(c => c.id === parentId);
-            if (!comment) return null;
-    
-            const children = comments.filter(c => (c?.parent?.id ?? null) === comment.id);
-            const firstReply = children.length > 0 ? mapComments(comments, children[0].id) : null;
-    
-            return {
-                id: comment.id,
-                content: comment.content,
-                count: children.length + children.reduce((acc, child) => acc + mapComments(comments, child.id).count, 0),
-                firstReply: firstReply
-            };
-        };
-
-        const rootComments = comments.filter(c => !c.parent);
-        return rootComments.map(root => mapComments(comments, root.id));
+    async getCommentWithRepliesByPostId(postId: number): Promise<CommentDTO[]> {
+        return await this.commentsRepository.findAllCommentsByPostId(postId);
     }
 
 }

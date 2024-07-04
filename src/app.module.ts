@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DataSourceConfig } from './config/data.source';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostsCommentsModule } from './modules/posts-comments/posts.comments.module';
+import { SeederModule } from './modules/seeders/seeder.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { PostsCommentsModule } from './modules/posts-comments/posts.comments.mod
     TypeOrmModule.forRoot({...DataSourceConfig}),
     PostsModule, 
     CommentsModule,
-    PostsCommentsModule
+    PostsCommentsModule,
+    SeederModule
   ],
 })
 export class AppModule {}

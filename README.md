@@ -91,6 +91,12 @@ ___
    $ npm run m:run
    ```
 
+   Additionally, to add the necessary functions to postgresql for the get-post-by-id and get-comment-with-replies-by-id endpoints run the following command
+
+   ```bash
+   $ npm run m:seed
+   ```
+
 7. **Running de app**
 
     ```bash

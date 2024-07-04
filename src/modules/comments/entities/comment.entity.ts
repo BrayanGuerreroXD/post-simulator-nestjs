@@ -2,7 +2,7 @@ import { Post } from "../../../modules/posts/entities/post.entity";
 import { BaseEntity } from "../../../config/base.entity";
 import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 
-@Entity('comment')
+@Entity()
 export class Comment extends BaseEntity {
     @Column({
         nullable: false,
@@ -11,7 +11,7 @@ export class Comment extends BaseEntity {
 
     @ManyToOne(() => Post, { nullable: false, onDelete: 'CASCADE'})
     @JoinColumn({ name: "post_id" })
-    post: Post;
+    post: Post; 
 
     @ManyToOne(() => Comment, { nullable: true, onDelete: 'CASCADE'})
     @JoinColumn({ name: "parent_id" })

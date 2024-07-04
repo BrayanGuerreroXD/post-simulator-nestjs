@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import * as morgan from 'morgan';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './exception-handler/global.exception.filter';
+import { Seeder } from './modules/seeders/seedder.';
 
 async function bootstrap() {
 
@@ -41,6 +42,10 @@ async function bootstrap() {
   const port = configService.get('PORT');
 
   app.useGlobalFilters(new GlobalExceptionFilter());
+
+  // console.log('Running seeder...');
+  // const seeder = app.get(Seeder);
+  // await seeder.run();
 
   await app.listen(port);
   console.log(`Application is running on: ${await app.getUrl()}`);
