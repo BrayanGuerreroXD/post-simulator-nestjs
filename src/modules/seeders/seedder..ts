@@ -25,7 +25,7 @@ export class Seeder {
         post.content = faker.lorem.paragraphs(2);
         await this.postRepository.save(post);
 
-        for (let j = 0; j < 100; j++) {
+        for (let j = 0; j < 1000; j++) {
             const comment = await this.createComment(post, null);
             await this.createReplies(comment, 1);
         }
