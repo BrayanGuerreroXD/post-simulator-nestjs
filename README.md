@@ -23,10 +23,11 @@ ___
 - [Node.js v20.15.0](https://nodejs.org/ "Node.js"): Node.js version 20.15.0 or higher runtime is required to use the API.
 - [NestJS v10.0.0](https://nestjs.com/ "NestJS"): NestJS version 10.0.0 or higher framework is used to build the API.
 - [PostgreSQL v16.3](https://www.postgresql.org/ "PostgreSQL"): PostgreSQL version 16.3 or higher is used as the relational database management system for storing data related to parking operations.
+- [Swagger v7.4.0](https://swagger.io/ "Swagger"): Swagger version 7.4.0 or higher is required to use the API.
 
 |Backend|
 |---|
-|![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) ![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white) ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)|
+|![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) ![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white) ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white) ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)|
 
 ___
 ### Installation and Usage:
