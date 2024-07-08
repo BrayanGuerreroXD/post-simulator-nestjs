@@ -2,6 +2,7 @@ import { DataSource, Repository } from "typeorm";
 import { Comment } from "./entities/comment.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CommentDTO } from "./interfaces/comment.dto";
+import { CommentPageDto } from "./interfaces/comment.page.dto";
 
 export class CommentsRepository extends Repository<Comment> {
     constructor(
@@ -90,6 +91,16 @@ export class CommentsRepository extends Repository<Comment> {
     async findAllCommentsByPostId(postId: number): Promise<CommentDTO[]> {
         const results = await this.repository.query('SELECT * FROM get_comment_trees_by_post_id($1) AS comment_trees', [postId]);
         return results[0]?.comment_trees || [];
+    }
+
+    async findAllCommentChildrenByCommentIdAndPageAndLimit(commentId: number, page: number, limit: number): Promise<CommentPageDto[]> {
+        const results = await this.repository.query('SELECT * FROM get_comment_tree_pagination_by_comment_id($1, $2, $3) AS children', [commentId, page, limit]);
+        return results[0]?.children || [];
+    }
+    
+    async findAllCommentsByPostIdAndPageAndLimit(postId: number, page: number, limit: number): Promise<CommentPageDto[]> {
+        const results = await this.repository.query('SELECT * FROM get_comment_tree_pagination_by_post_id($1, $2, $3) AS comments', [postId, page, limit]);
+        return results[0]?.comments || [];
     }
 
 }

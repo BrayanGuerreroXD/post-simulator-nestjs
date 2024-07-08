@@ -8,6 +8,8 @@ import { CommentNotFoundException } from 'src/exception-handler/exceptions.class
 import { ReplyRequestDto } from './dto/reply.request.dto';
 import { PostsService } from '../posts/posts.service';
 import { CommentDTO } from './interfaces/comment.dto';
+import { PageDto } from 'src/config/base.page.dto';
+import { CommentPageDto } from './interfaces/comment.page.dto';
 
 @Injectable()
 export class CommentsService {
@@ -84,6 +86,27 @@ export class CommentsService {
     // Get all responses to all comments by post_id and their count by implementing recursion
     async getCommentWithRepliesByPostId(postId: number): Promise<CommentDTO[]> {
         return await this.commentsRepository.findAllCommentsByPostId(postId);
+    }
+
+    async getCommentChildrenPaginate(commentId: number, page: number, limit: number): Promise<PageDto<CommentPageDto>> {
+        const commentExists = await this.existComment(commentId);
+        if (!commentExists)
+            throw new CommentNotFoundException();
+        
+        const comments = await this.commentsRepository.findAllCommentChildrenByCommentIdAndPageAndLimit(commentId, page, limit);
+        const count = comments.length
+        return new PageDto<CommentPageDto>(comments, count);
+    }
+    
+    async getCommentsPaginate(postId: number, page: number, limit: number): Promise<PageDto<CommentPageDto>> {
+        const post = await this.postsService.getPostById(postId);
+        const comments = await this.commentsRepository.findAllCommentsByPostIdAndPageAndLimit(postId, page, limit);
+        const count = comments.length
+        return new PageDto<CommentPageDto>(comments, count);
+    }
+
+    private async existComment(id: number): Promise<boolean> {
+        return await this.commentsRepository.commentExists(id);
     }
 
 }
