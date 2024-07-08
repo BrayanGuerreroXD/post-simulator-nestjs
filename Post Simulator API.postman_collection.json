@@ -136,7 +136,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "4"
+									"value": "1"
 								}
 							]
 						}
@@ -195,7 +195,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "3"
+									"value": "10"
 								}
 							]
 						}
@@ -222,7 +222,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "3"
+									"value": "1"
 								}
 							]
 						}
@@ -236,7 +236,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"content\": \"Obvio no\",\r\n    \"commentId\": 18\r\n}",
+							"raw": "{\r\n    \"content\": \"Testing Ten\",\r\n    \"commentId\": 300653\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -271,6 +271,80 @@
 							"port": "8081",
 							"path": [
 								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-comment-children-paginate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/children-by-comment-id/:comment_id/paginate?page=1&limit=40",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"children-by-comment-id",
+								":comment_id",
+								"paginate"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "40"
+								}
+							],
+							"variable": [
+								{
+									"key": "comment_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-comments-paginate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/comments-by-post-id/:post_id/paginate?page=1&limit=40",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"comments-by-post-id",
+								":post_id",
+								"paginate"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "40"
+								}
+							],
+							"variable": [
+								{
+									"key": "post_id",
+									"value": "1"
+								}
 							]
 						}
 					},

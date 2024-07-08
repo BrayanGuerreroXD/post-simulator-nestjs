@@ -71,13 +71,13 @@ ___
 
      Ensure these values are kept secret and not shared publicly.
 
-5. **Install all dependencies**
+4. **Install all dependencies**
    
     ```bash
     $ npm install
     ```
 
-6. **Generate and execute the migrations to create the tables in the database**.
+5. **Generate and execute the migrations to create the tables in the database**.
 
    To generate the migrations of the entities, you must create a folder in src called migrations: `src/migrations` and place the following command:
 
@@ -97,7 +97,7 @@ ___
    $ npm run m:seed
    ```
 
-7. **Running de app**
+6. **Running de app**
 
     ```bash
     # development
@@ -110,8 +110,16 @@ ___
     $ npm run start:prod
     ```
 
-8. **Test postman http request collection**
+7. **Test postman http request collection**
 
-   After both projects are running, it is time to test the http requests to determine the correct functioning of the API. The order of the Postman collection looks as follows:
+   Once the project has been executed, it is time to test the http requests to determine the correct functioning of the API. The order of the Postman collection is as follows:
 
    ![postman collection](https://github.com/BrayanGuerreroXD/post-simulator-nestjs/blob/main/postman-collection.png)
+   
+8. **Swagger Documentation**
+
+   To test HTTP requests and verify the correct functioning of the API, you can use the interactive documentation provided by Swagger. Access the Swagger documentation at the following URL:
+
+   http://localhost:8081/docs
+
+   This interface will allow you to explore, test and validate the different API endpoints in a simple and efficient way.

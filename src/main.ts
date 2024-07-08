@@ -5,6 +5,7 @@ import * as morgan from 'morgan';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './exception-handler/global.exception.filter';
 import { Seeder } from './modules/seeders/seedder.';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
 
@@ -46,6 +47,14 @@ async function bootstrap() {
   // console.log('Running seeder...');
   // const seeder = app.get(Seeder);
   // await seeder.run();
+
+  const config = new DocumentBuilder()
+    .setTitle('Post Simulator API')
+    .setDescription(`This is an example of a REST API in NestJS that simulates the operation of a CRUD for Posts, adding and replying comments, where comments can have N number of replies. This project is used to test the operation of TypeORM, including LAZY and EAGER queries, and interface handling.`)
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(port);
   console.log(`Application is running on: ${await app.getUrl()}`);
