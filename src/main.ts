@@ -7,6 +7,10 @@ import { GlobalExceptionFilter } from './exception-handler/global.exception.filt
 import { Seeder } from './modules/seeders/seedder.';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import * as fs from 'fs';
+import * as yaml from 'js-yaml';
+import * as express from 'express';
+
 async function bootstrap() {
 
   // Check required environment variables
@@ -44,6 +48,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(new GlobalExceptionFilter());
 
+  // This is a seeder that will run to populate the database with some initial data, if needed
   // console.log('Running seeder...');
   // const seeder = app.get(Seeder);
   // await seeder.run();
@@ -56,8 +61,20 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
+  // Save the YAML file
+  const yamlDocument = yaml.dump(document);
+  fs.writeFileSync('./swagger.yaml', yamlDocument);
+
+  // Serve the YAML file via an endpoint
+  app.use('/swagger.yaml', express.static('swagger.yaml'));
+
   await app.listen(port);
-  console.log(`Application is running on: ${await app.getUrl()}`);
+
+  require('simple-banner').set("POST SIMULATOR API", `
+    Application is running on: ${await app.getUrl()}
+    Swagger docs are available at: ${await app.getUrl()}/docs
+    Swagger YAML is available at: ${await app.getUrl()}/swagger.yaml
+  `, 1);
 }
 
 bootstrap();

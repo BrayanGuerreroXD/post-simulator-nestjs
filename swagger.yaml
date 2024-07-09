@@ -1,0 +1,737 @@
+openapi: 3.0.0
+paths:
+  /post:
+    post:
+      operationId: PostsController_create
+      parameters: []
+      requestBody:
+        required: true
+        description: Post request to create a new post
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequestDto'
+      responses:
+        '201':
+          description: The post has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponseDto'
+        '400':
+          description: Bad Request - Caused by an incorrect request object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Title is required
+                  error:
+                    type: string
+                    example: Bad Request
+                  status:
+                    type: number
+                    example: 400
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.236Z'
+      tags: &ref_0
+        - Posts
+  /post/{id}:
+    put:
+      operationId: PostsController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: number
+      requestBody:
+        required: true
+        description: Post request to update a post
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequestDto'
+      responses:
+        '200':
+          description: The post has been successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponseDto'
+        '400':
+          description: Bad Request - Caused by an incorrect request object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Title is required
+                  error:
+                    type: string
+                    example: Bad Request
+                  status:
+                    type: number
+                    example: 400
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.237Z'
+        '404':
+          description: Not Found - The post with the specified ID was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Post not found
+                  error:
+                    type: string
+                    example: PostNotFoundException
+                  status:
+                    type: number
+                    example: 404
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.237Z'
+      tags: *ref_0
+    delete:
+      operationId: PostsController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: number
+      responses:
+        '200':
+          description: The post has been successfully deleted
+        '404':
+          description: Not Found - The post with the specified ID was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Post not found
+                  error:
+                    type: string
+                    example: PostNotFoundException
+                  status:
+                    type: number
+                    example: 404
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.237Z'
+      tags: *ref_0
+  /posts:
+    get:
+      operationId: PostsController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: List of all posts
+          example: &ref_1
+            - id: 1
+              title: This is a post
+              content: This is a post content
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PostResponseDto'
+              example: *ref_1
+      tags: *ref_0
+  /comment:
+    post:
+      operationId: CommentsController_create
+      parameters: []
+      requestBody:
+        required: true
+        description: Comment request to create a new comment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequestDto'
+      responses:
+        '201':
+          description: The comment has been successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: numnber
+                    example: 1
+                  content:
+                    type: string
+                    example: This is a comment
+                  post:
+                    type: object
+                    $ref: '#/components/schemas/PostResponseDto'
+                    example:
+                      id: 1
+                      title: This is a post
+                      content: This is a post content
+                  parent:
+                    type: object
+                    example: null
+                  replies:
+                    type: array
+                    example: []
+        '400':
+          description: Bad Request - Caused by an incorrect request object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Content is required
+                  error:
+                    type: string
+                    example: Bad Request
+                  status:
+                    type: number
+                    example: 400
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.244Z'
+      tags: &ref_2
+        - Comments
+  /reply:
+    post:
+      operationId: CommentsController_reply
+      parameters: []
+      requestBody:
+        required: true
+        description: Reply request to create a new reply to a comment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplyRequestDto'
+      responses:
+        '200':
+          description: The reply has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponseDto'
+        '400':
+          description: Bad Request - Caused by an incorrect request object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Content is required
+                  error:
+                    type: string
+                    example: Bad Request
+                  status:
+                    type: number
+                    example: 400
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.244Z'
+        '404':
+          description: Not Found - The parent comment with the specified ID was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Comment not found
+                  error:
+                    type: string
+                    example: CommentNotFoundException
+                  status:
+                    type: number
+                    example: 404
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.244Z'
+      tags: *ref_2
+  /comment/{id}:
+    get:
+      operationId: CommentsController_getCommentById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Comment ID
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Get a comment by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponseDto'
+        '404':
+          description: Not Found - The comment with the specified ID was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Comment not found
+                  error:
+                    type: string
+                    example: CommentNotFoundException
+                  status:
+                    type: number
+                    example: 404
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.244Z'
+      tags: *ref_2
+  /comments:
+    get:
+      operationId: CommentsController_getAllComments
+      parameters: []
+      responses:
+        '200':
+          description: Get all comments
+          example: &ref_3
+            - id: 1
+              content: This is a comment
+              post:
+                id: 1
+                title: This is a post
+                content: This is a post content
+              parent: null
+              replies: []
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentResponseDto'
+              example: *ref_3
+      tags: *ref_2
+  /comment/{id}/replies:
+    get:
+      operationId: CommentsController_getCommentWithRepliesById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Comment ID
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Get a comment by ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentDTO'
+        '404':
+          description: Not Found - The comment with the specified ID was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Comment not found
+                  error:
+                    type: string
+                    example: CommentNotFoundException
+                  status:
+                    type: number
+                    example: 404
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.244Z'
+      tags: *ref_2
+  /children-by-comment-id/{comment_id}/paginate:
+    get:
+      operationId: CommentsController_getCommentChildrenPaginate
+      parameters:
+        - name: comment_id
+          required: true
+          in: path
+          description: Comment ID
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          description: Page number
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          description: Number of items per page
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Get comment children by comment ID paginated
+          example: &ref_4
+            data:
+              - id: 1
+                content: This is a comment
+                count: 0
+                firstReply: null
+            count: 1
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDto'
+              example: *ref_4
+        '404':
+          description: Not Found - The comment with the specified ID was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Comment not found
+                  error:
+                    type: string
+                    example: CommentNotFoundException
+                  status:
+                    type: number
+                    example: 404
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.245Z'
+      tags: *ref_2
+  /comments-by-post-id/{post_id}/paginate:
+    get:
+      operationId: CommentsController_getCommentsPaginate
+      parameters:
+        - name: post_id
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          description: Page number
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          description: Number of items per page
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Get comment root by post ID paginated
+          example: &ref_5
+            data:
+              - id: 1
+                content: This is a comment
+                count: 0
+                firstReply: null
+            count: 1
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageDto'
+              example: *ref_5
+        '404':
+          description: Not Found - The post with the specified ID was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Post not found
+                  error:
+                    type: string
+                    example: PostNotFoundException
+                  status:
+                    type: number
+                    example: 404
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.245Z'
+      tags: *ref_2
+  /post-comments-replies/{id}:
+    get:
+      operationId: PostsCommentsController_getPostWithCommentsAndRepliesById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: number
+      responses:
+        '200':
+          description: The reply has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostDTO'
+        '404':
+          description: Not Found - The post with the specified ID was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: string
+                      example: Post not found
+                  error:
+                    type: string
+                    example: PostNotFoundException
+                  status:
+                    type: number
+                    example: 404
+                  date:
+                    type: string
+                    example: '2024-07-09T14:32:14.274Z'
+      tags:
+        - Posts Comments
+info:
+  title: Post Simulator API
+  description: >-
+    This is an example of a REST API in NestJS that simulates the operation of a
+    CRUD for Posts, adding and replying comments, where comments can have N
+    number of replies. This project is used to test the operation of TypeORM,
+    including LAZY and EAGER queries, and interface handling.
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    PostRequestDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: This is a post
+          description: Post title (max 50 characters)
+        content:
+          type: string
+          example: This is a post content
+          description: Post content
+      required:
+        - title
+        - content
+    PostResponseDto:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+          description: Post ID
+        title:
+          type: string
+          example: This is a post
+          description: Post title
+        content:
+          type: string
+          example: This is a post content
+          description: Post content
+        comments:
+          type: array
+          items:
+            description: Post comments
+            example: []
+            type: array
+            items:
+              $ref: '#/components/schemas/CommentResponseDto'
+      required:
+        - id
+        - title
+        - content
+        - comments
+    CommentResponseDto:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 2
+          description: Comment ID
+        content:
+          type: string
+          example: This is a comment
+          description: Comment content
+        post:
+          example:
+            id: 1
+            title: This is a post
+            content: This is a post content
+          description: Post object
+          allOf:
+            - $ref: '#/components/schemas/PostResponseDto'
+        parent:
+          example:
+            id: 1
+            content: This is a parent comment
+          description: Parent comment object
+          allOf:
+            - $ref: '#/components/schemas/CommentResponseDto'
+        replies:
+          type: array
+          items:
+            example: []
+            description: Child comments
+            type: array
+            items:
+              $ref: '#/components/schemas/CommentResponseDto'
+      required:
+        - id
+        - content
+        - post
+        - parent
+        - replies
+    CommentRequestDto:
+      type: object
+      properties:
+        content:
+          type: string
+          example: This is a comment
+        postId:
+          type: number
+          example: 1
+      required:
+        - content
+        - postId
+    ReplyRequestDto:
+      type: object
+      properties:
+        content:
+          type: string
+          example: This is a reply
+          description: Reply content
+        commentId:
+          type: number
+          example: 1
+          description: Comment ID
+      required:
+        - content
+        - commentId
+    CommentDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Comment ID
+          example: 1
+        content:
+          type: string
+          description: Comment content
+          example: This is a comment
+        count:
+          type: number
+          description: Number of descendants
+          example: 0
+        firstReply:
+          description: First reply
+          example: null
+          allOf:
+            - $ref: '#/components/schemas/CommentDTO'
+      required:
+        - id
+        - content
+        - count
+        - firstReply
+    PageDto:
+      type: object
+      properties:
+        data:
+          description: Data array
+          example: []
+          type: array
+          items:
+            type: object
+        count:
+          type: number
+          example: 1
+          description: Total count
+      required:
+        - data
+        - count
+    PostDTO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Post ID
+          example: 1
+        title:
+          type: string
+          description: Post title
+          example: This is a post
+        content:
+          type: string
+          description: Post content
+          example: This is a post content
+        comments:
+          description: Post comments
+          example:
+            - id: 1
+              content: This is a comment
+              count: 0
+              firstReply: null
+          items:
+            type: array
+          type: array
+      required:
+        - id
+        - title
+        - content
+        - comments
