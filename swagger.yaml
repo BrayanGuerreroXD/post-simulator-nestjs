@@ -38,7 +38,7 @@ paths:
                     example: 400
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.236Z'
+                    example: '2024-07-09T21:41:35.495Z'
       tags: &ref_0
         - Posts
   /post/{id}:
@@ -85,7 +85,7 @@ paths:
                     example: 400
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.237Z'
+                    example: '2024-07-09T21:41:35.496Z'
         '404':
           description: Not Found - The post with the specified ID was not found
           content:
@@ -106,7 +106,7 @@ paths:
                     example: 404
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.237Z'
+                    example: '2024-07-09T21:41:35.496Z'
       tags: *ref_0
     delete:
       operationId: PostsController_remove
@@ -140,7 +140,7 @@ paths:
                     example: 404
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.237Z'
+                    example: '2024-07-09T21:41:35.497Z'
       tags: *ref_0
   /posts:
     get:
@@ -219,7 +219,7 @@ paths:
                     example: 400
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.244Z'
+                    example: '2024-07-09T21:41:35.510Z'
       tags: &ref_2
         - Comments
   /reply:
@@ -260,7 +260,7 @@ paths:
                     example: 400
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.244Z'
+                    example: '2024-07-09T21:41:35.510Z'
         '404':
           description: Not Found - The parent comment with the specified ID was not found
           content:
@@ -281,7 +281,7 @@ paths:
                     example: 404
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.244Z'
+                    example: '2024-07-09T21:41:35.510Z'
       tags: *ref_2
   /comment/{id}:
     get:
@@ -320,7 +320,7 @@ paths:
                     example: 404
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.244Z'
+                    example: '2024-07-09T21:41:35.510Z'
       tags: *ref_2
   /comments:
     get:
@@ -383,7 +383,7 @@ paths:
                     example: 404
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.244Z'
+                    example: '2024-07-09T21:41:35.510Z'
       tags: *ref_2
   /children-by-comment-id/{comment_id}/paginate:
     get:
@@ -442,7 +442,7 @@ paths:
                     example: 404
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.245Z'
+                    example: '2024-07-09T21:41:35.511Z'
       tags: *ref_2
   /comments-by-post-id/{post_id}/paginate:
     get:
@@ -501,7 +501,7 @@ paths:
                     example: 404
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.245Z'
+                    example: '2024-07-09T21:41:35.511Z'
       tags: *ref_2
   /post-comments-replies/{id}:
     get:
@@ -531,16 +531,21 @@ paths:
                     type: array
                     items:
                       type: string
-                      example: Post not found
+                      example:
+                        - Post not found
+                      description: List of errors
                   error:
                     type: string
                     example: PostNotFoundException
+                    description: Error type
                   status:
                     type: number
                     example: 404
+                    description: HTTP status code
                   date:
                     type: string
-                    example: '2024-07-09T14:32:14.274Z'
+                    example: '2024-07-09T21:41:35.601Z'
+                    description: Date of the error
       tags:
         - Posts Comments
 info:
